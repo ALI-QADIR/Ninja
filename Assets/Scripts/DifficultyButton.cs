@@ -22,9 +22,4 @@ public class DifficultyButton : MonoBehaviour
     {
         _gameManager.StartGame(difficulty);
     }
-
-    // Update is called once per frame
-    private void Update()
-    {
-    }
 }

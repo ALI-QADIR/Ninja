@@ -29,11 +29,6 @@ public class GameManager : MonoBehaviour
     private int _score;
     private int _lives = 3;
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-    }
-
     // Update is called once per frame
     private void Update()
     {

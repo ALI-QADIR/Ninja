@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Targets : MonoBehaviour
@@ -51,7 +53,7 @@ public class Targets : MonoBehaviour
         return new Vector3(Random.Range(-_xRange, _xRange), _ySpawnPos);
     }
 
-    private void OnMouseDown()
+    private void DestroyObject()
     {
         if (!_gameManager.isGameActive) return;
         Destroy(gameObject);
@@ -69,10 +71,9 @@ public class Targets : MonoBehaviour
                 _gameManager.LoseLife();
             Destroy(gameObject);
         }
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
+        else if (other.CompareTag("Destroyer"))
+        {
+            DestroyObject();
+        }
     }
 }
