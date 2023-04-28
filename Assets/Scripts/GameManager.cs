@@ -17,11 +17,14 @@ public class GameManager : MonoBehaviour
     [SerializeField, Tooltip("Score text")] private TextMeshProUGUI _livesText;
     [SerializeField, Tooltip("Game Over text")] private GameObject _gameOver;
     [SerializeField, Tooltip("Game Over text")] private GameObject _mainMenu;
+    [SerializeField, Tooltip("Game Over text")] private GameObject _pauseMenu;
 
     [Header("Audio")]
     [SerializeField, Tooltip("Background Music")] private AudioSource _backgroundMusic;
 
     public bool isGameActive;
+
+    private bool _isPaused;
 
     private int _score;
     private int _lives = 3;
@@ -34,6 +37,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
     }
 
     public void StartGame(float difficulty)
@@ -43,10 +50,27 @@ public class GameManager : MonoBehaviour
         _scoreText.gameObject.SetActive(true);
         _livesText.gameObject.SetActive(true);
         isGameActive = true;
+        _isPaused = false;
         _score = 0;
         StartCoroutine(SpawnTarget());
         UpdateScore(0);
         UpdateLives();
+    }
+
+    public void PauseGame()
+    {
+        if (_isPaused)
+        {
+            Time.timeScale = 1;
+            _pauseMenu.SetActive(false);
+            _isPaused = false;
+        }
+        else
+        {
+            Time.timeScale = 0;
+            _pauseMenu.SetActive(true);
+            _isPaused = true;
+        }
     }
 
     private IEnumerator SpawnTarget()
@@ -89,6 +113,12 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void Quit()
+    {
+        Debug.Log("Quit");
+        Application.Quit();
     }
 
     public void SetAudio(float volume)
